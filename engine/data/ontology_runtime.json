@@ -1,0 +1,380 @@
+{
+  "version": "0.1",
+  "domain": "data_center_infrastructure",
+  "build_timestamp": "2025-12-09T16:53:55.442154",
+  "entities": {
+    "ServiceFabric": {
+      "type": "product",
+      "category": "connectivity",
+      "synonyms": [
+        "SF",
+        "Service Fabric",
+        "service fabric"
+      ],
+      "related_terms": [
+        "Metro Connect",
+        "Megaport",
+        "connectivity"
+      ],
+      "definition": "Digital Realty's virtual interconnectivity solution"
+    },
+    "Colocation": {
+      "type": "service",
+      "category": "deployment_type",
+      "synonyms": [
+        "colo",
+        "co-location",
+        "colocation"
+      ],
+      "related_terms": [
+        "Scale",
+        "cage",
+        "cabinet",
+        "rack"
+      ],
+      "definition": "Shared data center space where multiple customers co-locate their equipment, as opposed to Scale (dedicated facilities for single customers)"
+    },
+    "Scale": {
+      "type": "service",
+      "category": "deployment_type",
+      "synonyms": [
+        "scale site",
+        "scale location",
+        "scale deployment"
+      ],
+      "related_terms": [
+        "Colocation",
+        "dedicated"
+      ],
+      "definition": "Dedicated data center facilities for single customers, as opposed to Colocation (shared space)"
+    },
+    "PlatformDIGITAL": {
+      "type": "product",
+      "category": "platform",
+      "synonyms": [
+        "Platform DIGITAL",
+        "DLR Platform"
+      ],
+      "related_terms": [
+        "ServiceFabric",
+        "Data Gravity"
+      ],
+      "definition": "Digital Realty's interconnection and data exchange platform"
+    },
+    "Data Gravity": {
+      "type": "concept",
+      "category": "strategy",
+      "synonyms": [
+        "data gravity"
+      ],
+      "related_terms": [
+        "PlatformDIGITAL",
+        "interconnection"
+      ],
+      "definition": "A concept describing how growing volumes of data attract applications, services, and workloads toward their location, making data harder to move and increasing the need for proximity and interconnection"
+    },
+    "DRIX": {
+      "type": "service",
+      "category": "",
+      "synonyms": [
+        "internet exchange",
+        "IX"
+      ],
+      "related_terms": [
+        "interconnection"
+      ],
+      "definition": "Digital Realty's internet exchange service enabling direct network interconnection between participants"
+    },
+    "DFW10": {
+      "type": "facility",
+      "market": "Dallas",
+      "region": "North America",
+      "synonyms": [
+        "Dallas site",
+        "2323 Bryan Street",
+        "Dallas data center"
+      ],
+      "address": "2323 Bryan Street, Dallas, Texas",
+      "related_terms": []
+    },
+    "PHX10": {
+      "type": "facility",
+      "market": "Phoenix",
+      "region": "North America",
+      "synonyms": [
+        "Phoenix site",
+        "Phoenix data center",
+        "120 E. Van Buren Street"
+      ],
+      "address": "120 E. Van Buren Street, Phoenix, Arizona",
+      "related_terms": []
+    },
+    "data center": {
+      "type": "infrastructure",
+      "synonyms": [
+        "datacenter",
+        "data centre",
+        "DC",
+        "facility",
+        "site"
+      ],
+      "related_terms": [],
+      "definition": "Physical facility housing IT infrastructure and computing equipment",
+      "category": ""
+    },
+    "capacity": {
+      "type": "metric",
+      "synonyms": [
+        "available capacity",
+        "power capacity",
+        "power",
+        "electrical power",
+        "space capacity",
+        "kW",
+        "MW",
+        "kilowatt",
+        "megawatt"
+      ],
+      "related_terms": [
+        "deployment",
+        "available"
+      ],
+      "definition": "Available resources for customer deployment, either electrical power (measured in kW/MW) or physical space (measured in racks/cages/square feet)",
+      "category": ""
+    },
+    "cooling": {
+      "type": "infrastructure",
+      "synonyms": [
+        "HVAC",
+        "air conditioning",
+        "cooling system",
+        "thermal management",
+        "liquid cooling",
+        "air cooling"
+      ],
+      "related_terms": [
+        "PUE",
+        "infrastructure"
+      ],
+      "definition": "Climate control systems maintaining optimal temperature for IT equipment (includes air-based and liquid-based cooling methods)",
+      "category": ""
+    },
+    "rack": {
+      "type": "infrastructure",
+      "synonyms": [
+        "server rack",
+        "equipment rack",
+        "racks"
+      ],
+      "related_terms": [
+        "cabinet",
+        "cage",
+        "U space"
+      ],
+      "definition": "Standardized mounting frame for IT equipment (typically 19-inch wide)",
+      "category": ""
+    },
+    "deployment": {
+      "type": "service",
+      "synonyms": [
+        "install",
+        "installation",
+        "rollout",
+        "implementation"
+      ],
+      "related_terms": [
+        "capacity",
+        "infrastructure"
+      ],
+      "definition": "Process of installing and configuring customer IT infrastructure",
+      "category": ""
+    },
+    "generator": {
+      "type": "infrastructure",
+      "synonyms": [
+        "backup generator",
+        "diesel generator",
+        "emergency generator"
+      ],
+      "related_terms": [
+        "UPS",
+        "redundant",
+        "power"
+      ],
+      "definition": "Backup power generation system for facility redundancy",
+      "category": ""
+    },
+    "PUE": {
+      "type": "metric",
+      "synonyms": [
+        "power usage effectiveness",
+        "energy efficiency"
+      ],
+      "related_terms": [
+        "cooling",
+        "power"
+      ],
+      "definition": "Metric measuring data center energy efficiency (total facility power / IT equipment power). Ideal PUE is 1.0, typical range 1.2-2.0",
+      "category": ""
+    },
+    "infrastructure": {
+      "type": "general",
+      "synonyms": [
+        "IT infrastructure",
+        "facilities infrastructure"
+      ],
+      "related_terms": [
+        "data center",
+        "deployment"
+      ],
+      "definition": "Physical and technical systems supporting data center operations",
+      "category": ""
+    },
+    "cabinet": {
+      "type": "infrastructure",
+      "synonyms": [
+        "server cabinet",
+        "enclosure"
+      ],
+      "related_terms": [
+        "rack",
+        "cage"
+      ],
+      "definition": "Enclosed rack unit for securing IT equipment",
+      "category": ""
+    },
+    "cage": {
+      "type": "infrastructure",
+      "synonyms": [
+        "data cage",
+        "secure cage",
+        "colocation cage"
+      ],
+      "related_terms": [
+        "rack",
+        "cabinet",
+        "colocation"
+      ],
+      "definition": "Physical enclosed space within data center for customer equipment (typically larger than rack/cabinet)",
+      "category": ""
+    },
+    "suite": {
+      "type": "infrastructure",
+      "synonyms": [
+        "data suite",
+        "customer suite"
+      ],
+      "related_terms": [
+        "cage",
+        "colocation"
+      ],
+      "definition": "Private enclosed area within data center containing multiple racks/cages",
+      "category": ""
+    },
+    "redundant": {
+      "type": "design_principle",
+      "synonyms": [
+        "redundancy",
+        "backup",
+        "failover",
+        "N+1"
+      ],
+      "related_terms": [
+        "generator",
+        "UPS"
+      ],
+      "definition": "Duplicate systems ensuring continuous operation if primary fails",
+      "category": ""
+    },
+    "CSP": {
+      "type": "partner_category",
+      "synonyms": [
+        "cloud service provider",
+        "cloud provider"
+      ],
+      "related_terms": [
+        "ServiceFabric",
+        "interconnection"
+      ],
+      "definition": "Companies providing cloud computing services (e.g., AWS, Azure, Google Cloud)",
+      "category": ""
+    },
+    "NSP": {
+      "type": "partner_category",
+      "synonyms": [
+        "network service provider",
+        "network provider",
+        "carrier"
+      ],
+      "related_terms": [
+        "ServiceFabric",
+        "connectivity"
+      ],
+      "definition": "Companies providing network connectivity and telecommunications services",
+      "category": ""
+    },
+    "Megaport": {
+      "type": "technology_partner",
+      "synonyms": [
+        "Megaport platform",
+        "Megaport network"
+      ],
+      "related_terms": [
+        "ServiceFabric",
+        "Service Exchange",
+        "cloud connectivity",
+        "CSP"
+      ],
+      "definition": "Software-defined networking platform partner enabling on-demand interconnection between Digital Realty data centers and cloud services",
+      "category": ""
+    },
+    "EMEA": {
+      "type": "region",
+      "synonyms": [
+        "Europe",
+        "European region"
+      ],
+      "key_markets": [
+        "Frankfurt",
+        "London",
+        "Amsterdam",
+        "Paris",
+        "Madrid",
+        "Zurich"
+      ],
+      "related_terms": []
+    },
+    "APAC": {
+      "type": "region",
+      "synonyms": [
+        "Asia Pacific",
+        "Asia",
+        "Pacific region"
+      ],
+      "key_markets": [
+        "Singapore",
+        "Tokyo",
+        "Sydney",
+        "Hong Kong"
+      ],
+      "related_terms": []
+    },
+    "North America": {
+      "type": "region",
+      "synonyms": [
+        "NA",
+        "Americas",
+        "AMER"
+      ],
+      "key_markets": [
+        "Chicago",
+        "Dallas",
+        "New York",
+        "Phoenix",
+        "Los Angeles"
+      ],
+      "related_terms": []
+    }
+  },
+  "entity_count": 26
+}

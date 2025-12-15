@@ -1,0 +1,204 @@
+# Entity to Azure Cognitive Search Index Mapping
+# Maps each ontology entity to its corresponding search indexes
+# Version: 0.1
+# Last Updated: 2025-11-20
+
+# ============================================================================
+# PRODUCTS & SERVICES (6 entities)
+# ============================================================================
+
+ServiceFabric:
+  primary_index: "service-fabric-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "ServiceFabric availability"
+
+Colocation:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Digital Realty Colocation sites offerings and specifications"
+
+Scale:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: Digital Realty Scale sites offerings and specifications"
+
+PlatformDIGITAL:
+  primary_index: "additional-properties"
+  secondary_indexes: []
+  description: "PlatformDIGITAL interconnection platform"
+
+Data Gravity:
+  primary_index: "additional-properties"
+  secondary_indexes: []
+  description: "Data Gravity concept and strategic information"
+
+DRIX:
+  primary_index: "digital-realty-internet-exchange"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Digital Realty Internet Exchange participants"
+
+# ============================================================================
+# FACILITIES (2 entities)
+# ============================================================================
+
+DFW10:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+    - "nsp-index"
+    - "datacenter-to-cloud-latency-by-megaport"
+  description: "DFW10 facility specifications, availability, and connectivity"
+
+PHX10:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+    - "datacenter-to-cloud-latency-by-megaport"
+  description: "PHX10 facility specifications and availability"
+
+# ============================================================================
+# TECHNICAL TERMS (14 entities)
+# ============================================================================
+
+data center:
+  primary_index: "additional-properties"
+  secondary_indexes:
+    - "product-availability-metrix-index"
+  description: "General data center information and specifications"
+
+capacity:
+  primary_index: "capacity-index"
+  secondary_indexes:
+    - "product-availability-metrix-index"
+    - "additional-properties"
+  description: "Power capacity information"
+
+cooling:
+  primary_index: "additional-properties"
+  secondary_indexes:
+    - "product-availability-metrix-index"
+  description: "Cooling systems and thermal management"
+
+rack:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes: []
+  description: "Rack specifications and availability"
+
+deployment:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Deployment services and processes"
+
+generator:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Backup generator and power redundancy"
+
+PUE:
+  primary_index: "additional-properties"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Power Usage Effectiveness metrics"
+
+infrastructure:
+  primary_index: "additional-properties"
+  secondary_indexes: []
+  description: "General infrastructure information"
+
+cabinet:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Cabinet specifications and availability"
+
+cage:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Cage specifications and colocation options"
+
+suite:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Suite specifications and availability"
+
+redundant:
+  primary_index: "additional-properties"
+  secondary_indexes: []
+  description: "Redundancy and failover information"
+
+CSP:
+  primary_index: "cloud-service-provider"
+  secondary_indexes:
+  description: "Cloud Service Provider connectivity and options"
+
+NSP:
+  primary_index: "nsp-index"
+  secondary_indexes: []
+  description: "Network Service Provider connectivity and options"
+
+# ============================================================================
+# PARTNERS & TECHNOLOGY (1 entity)
+# ============================================================================
+
+Megaport:
+  primary_index: "service-fabric-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Megaport platform connectivity and integration"
+
+# ============================================================================
+# GEOGRAPHIC TERMS (3 entities)
+# ============================================================================
+
+EMEA:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Europe, Middle East, and Africa region facilities"
+
+APAC:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "Asia-Pacific region facilities"
+
+North America:
+  primary_index: "product-availability-metrix-index"
+  secondary_indexes:
+    - "additional-properties"
+  description: "North America region facilities"
+
+# ============================================================================
+# METADATA
+# ============================================================================
+
+# Total Entities: 26
+# Total Indexes: 13
+#
+# Azure Cognitive Search Indexes Used:
+# 1. service-fabric-index
+# 2. metro-connect-fiber-network
+# 3. product-availability-metrix-index
+# 4. capacity-index
+# 5. nsp-index
+# 6. certifications-index
+# 7. cloud-service-provider
+# 8. datacenter-to-cloud-latency-by-megaport
+# 9. digital-realty-internet-exchange
+# 10. additional-properties
+# 11. removed-properties
+# 12-13. (Additional indexes as needed)
+#
+# Notes:
+# - primary_index: Main index to search for this entity
+# - secondary_indexes: Additional indexes that may contain relevant information
+# - All entities have at least one index mapping
+# - "additional-properties" is a common fallback index for general information

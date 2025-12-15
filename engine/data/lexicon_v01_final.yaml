@@ -1,0 +1,426 @@
+# Nexus Query Lexicon v0.1
+# Digital Realty Data Center Domain Vocabulary
+# Created: November 13, 2025
+# Last Updated: November 19, 2025
+# Total Terms: 28
+
+version: "0.1"
+domain: "data_center_infrastructure"
+description: "Controlled vocabulary for Digital Realty Nexus query understanding and expansion"
+
+products:
+  - canonical: "ServiceFabric"
+    type: "product"
+    category: "connectivity"
+    synonyms:
+      - "SF"
+      - "Service Fabric"
+      - "service fabric"
+    definition: "Digital Realty's virtual interconnectivity solution"
+    related_terms:
+      - "Metro Connect"
+      - "Megaport"
+      - "connectivity"
+    
+  - canonical: "Colocation"
+    type: "service"
+    category: "deployment_type"
+    synonyms:
+      - "colo"
+      - "co-location"
+      - "colocation"
+    definition: "Shared data center space where multiple customers co-locate their equipment, as opposed to Scale (dedicated facilities for single customers)"
+    related_terms:
+      - "Scale"
+      - "cage"
+      - "cabinet"
+      - "rack"
+      
+  - canonical: "Scale"
+    type: "service"
+    category: "deployment_type"
+    synonyms:
+      - "scale site"
+      - "scale location"
+      - "scale deployment"
+    definition: "Dedicated data center facilities for single customers, as opposed to Colocation (shared space)"
+    related_terms:
+      - "Colocation"
+      - "dedicated"
+      
+  - canonical: "PlatformDIGITAL"
+    type: "product"
+    category: "platform"
+    synonyms:
+      - "Platform DIGITAL"
+      - "DLR Platform"
+    definition: "Digital Realty's interconnection and data exchange platform"
+    related_terms:
+      - "ServiceFabric"
+      - "Data Gravity"
+      
+  - canonical: "Data Gravity"
+    type: "concept"
+    category: "strategy"
+    synonyms:
+      - "data gravity"
+    definition: "A concept describing how growing volumes of data attract applications, services, and workloads toward their location, making data harder to move and increasing the need for proximity and interconnection"
+    related_terms:
+      - "PlatformDIGITAL"
+      - "interconnection"
+      
+  - canonical: "DRIX"
+    type: "service"
+    full_form: "Digital Realty Internet Exchange"
+    synonyms:
+      - "internet exchange"
+      - "IX"
+    definition: "Digital Realty's internet exchange service enabling direct network interconnection between participants"
+    related_terms:
+      - "interconnection"
+     
+
+# ============================================================================
+# FACILITIES (2 terms)
+# ============================================================================
+
+facilities:
+  - canonical: "DFW10"
+    type: "facility"
+    market: "Dallas"
+    region: "North America"
+    synonyms:
+      - "Dallas site"
+      - "2323 Bryan Street"
+      - "Dallas data center"
+    address: "2323 Bryan Street, Dallas, Texas"
+    
+  - canonical: "PHX10"
+    type: "facility"
+    market: "Phoenix"
+    region: "North America"
+    synonyms:
+      - "Phoenix site"
+      - "Phoenix data center"
+      - "120 E. Van Buren Street"
+    address: "120 E. Van Buren Street, Phoenix, Arizona"
+
+# ============================================================================
+# TECHNICAL TERMS (14 terms)
+# ============================================================================
+
+technical_terms:
+  - canonical: "data center"
+    type: "infrastructure"
+    synonyms:
+      - "datacenter"
+      - "data centre"
+      - "DC"
+      - "facility"
+      - "site"
+    definition: "Physical facility housing IT infrastructure and computing equipment"
+    
+  - canonical: "capacity"
+    type: "metric"
+    synonyms:
+      - "available capacity"
+      - "power capacity"
+      - "power"
+      - "electrical power"
+      - "space capacity"
+      - "kW"
+      - "MW"
+      - "kilowatt"
+      - "megawatt"
+    definition: "Available resources for customer deployment, either electrical power (measured in kW/MW) or physical space (measured in racks/cages/square feet)"
+    disambiguation:
+      primary: "When user says 'capacity' or 'power', typically means power capacity (kW/MW)"
+      secondary: "When user says 'space capacity', means physical space (racks, cages, square feet)"
+    units:
+      power: "kW (kilowatts), MW (megawatts)"
+      space: "racks, cages, square feet"
+    related_terms:
+      - "deployment"
+      - "available"
+      
+  - canonical: "cooling"
+    type: "infrastructure"
+    synonyms:
+      - "HVAC"
+      - "air conditioning"
+      - "cooling system"
+      - "thermal management"
+      - "liquid cooling"
+      - "air cooling"
+    definition: "Climate control systems maintaining optimal temperature for IT equipment (includes air-based and liquid-based cooling methods)"
+    related_terms:
+      - "PUE"
+      - "infrastructure"
+      
+  - canonical: "rack"
+    type: "infrastructure"
+    synonyms:
+      - "server rack"
+      - "equipment rack"
+      - "racks"
+    definition: "Standardized mounting frame for IT equipment (typically 19-inch wide)"
+    related_terms:
+      - "cabinet"
+      - "cage"
+      - "U space"
+      
+  - canonical: "deployment"
+    type: "service"
+    synonyms:
+      - "install"
+      - "installation"
+      - "rollout"
+      - "implementation"
+    definition: "Process of installing and configuring customer IT infrastructure"
+    related_terms:
+      - "capacity"
+      - "infrastructure"
+      
+  - canonical: "generator"
+    type: "infrastructure"
+    synonyms:
+      - "backup generator"
+      - "diesel generator"
+      - "emergency generator"
+    definition: "Backup power generation system for facility redundancy"
+    related_terms:
+      - "UPS"
+      - "redundant"
+      - "power"
+      
+  - canonical: "PUE"
+    type: "metric"
+    full_form: "Power Usage Effectiveness"
+    synonyms:
+      - "power usage effectiveness"
+      - "energy efficiency"
+    definition: "Metric measuring data center energy efficiency (total facility power / IT equipment power). Ideal PUE is 1.0, typical range 1.2-2.0"
+    related_terms:
+      - "cooling"
+      - "power"
+      
+  - canonical: "infrastructure"
+    type: "general"
+    synonyms:
+      - "IT infrastructure"
+      - "facilities infrastructure"
+    definition: "Physical and technical systems supporting data center operations"
+    related_terms:
+      - "data center"
+      - "deployment"
+      
+  - canonical: "cabinet"
+    type: "infrastructure"
+    synonyms:
+      - "server cabinet"
+      - "enclosure"
+    definition: "Enclosed rack unit for securing IT equipment"
+    related_terms:
+      - "rack"
+      - "cage"
+      
+  - canonical: "cage"
+    type: "infrastructure"
+    synonyms:
+      - "data cage"
+      - "secure cage"
+      - "colocation cage"
+    definition: "Physical enclosed space within data center for customer equipment (typically larger than rack/cabinet)"
+    related_terms:
+      - "rack"
+      - "cabinet"
+      - "colocation"
+      
+  - canonical: "suite"
+    type: "infrastructure"
+    synonyms:
+      - "data suite"
+      - "customer suite"
+    definition: "Private enclosed area within data center containing multiple racks/cages"
+    related_terms:
+      - "cage"
+      - "colocation"
+      
+  - canonical: "redundant"
+    type: "design_principle"
+    synonyms:
+      - "redundancy"
+      - "backup"
+      - "failover"
+      - "N+1"
+    definition: "Duplicate systems ensuring continuous operation if primary fails"
+    related_terms:
+      - "generator"
+      - "UPS"
+      
+  - canonical: "CSP"
+    type: "partner_category"
+    full_form: "Cloud Service Provider"
+    synonyms:
+      - "cloud service provider"
+      - "cloud provider"
+    definition: "Companies providing cloud computing services (e.g., AWS, Azure, Google Cloud)"
+    examples:
+      - "AWS"
+      - "Microsoft Azure"
+      - "Google Cloud Platform"
+      - "Oracle Cloud"
+    related_terms:
+      - "ServiceFabric"
+      - "interconnection"
+      
+  - canonical: "NSP"
+    type: "partner_category"
+    full_form: "Network Service Provider"
+    synonyms:
+      - "network service provider"
+      - "network provider"
+      - "carrier"
+    definition: "Companies providing network connectivity and telecommunications services"
+    examples:
+      - "Zayo"
+      - "Level 3"
+      - "AT&T"
+      - "Verizon"
+    related_terms:
+      - "ServiceFabric"
+      - "connectivity"
+
+# ============================================================================
+# PARTNERS & TECHNOLOGY (1 term)
+# ============================================================================
+
+partners:
+  - canonical: "Megaport"
+    type: "technology_partner"
+    synonyms:
+      - "Megaport platform"
+      - "Megaport network"
+    definition: "Software-defined networking platform partner enabling on-demand interconnection between Digital Realty data centers and cloud services"
+    relationship: "Strategic technology partner integrated with ServiceFabric and Service Exchange"
+    related_terms:
+      - "ServiceFabric"
+      - "Service Exchange"
+      - "cloud connectivity"
+      - "CSP"
+
+# ============================================================================
+# GEOGRAPHIC TERMS (3 terms)
+# ============================================================================
+
+geographic_terms:
+  - canonical: "EMEA"
+    type: "region"
+    full_form: "Europe, Middle East, and Africa"
+    synonyms:
+      - "Europe"
+      - "European region"
+    key_markets:
+      - "Frankfurt"
+      - "London"
+      - "Amsterdam"
+      - "Paris"
+      - "Madrid"
+      - "Zurich"
+      
+  - canonical: "APAC"
+    type: "region"
+    full_form: "Asia-Pacific"
+    synonyms:
+      - "Asia Pacific"
+      - "Asia"
+      - "Pacific region"
+    key_markets:
+      - "Singapore"
+      - "Tokyo"
+      - "Sydney"
+      - "Hong Kong"
+      
+  - canonical: "North America"
+    type: "region"
+    synonyms:
+      - "NA"
+      - "Americas"
+      - "AMER"
+    key_markets:
+      - "Chicago"
+      - "Dallas"
+      - "New York"
+      - "Phoenix"
+      - "Los Angeles"
+
+# ============================================================================
+# DISAMBIGUATION RULES
+# ============================================================================
+
+disambiguation:
+  - term: "fabric"
+    contexts:
+      - context: "ServiceFabric"
+        type: "product"
+        priority: 1
+        indicators: ["SF", "virtual", "interconnect", "cloud", "service"]
+      - context: "network fabric"
+        type: "infrastructure"
+        priority: 2
+        indicators: ["switching", "topology", "layer 2", "layer 3", "network"]
+        
+  - term: "capacity"
+    contexts:
+      - context: "power capacity"
+        type: "power_infrastructure"
+        priority: 1
+        indicators: ["kW", "MW", "power", "electrical", "watts", "generator"]
+        unit: "kW or MW"
+      - context: "space capacity"
+        type: "physical_space"
+        priority: 2
+        indicators: ["rack", "cage", "square feet", "sqft", "space", "cabinet"]
+        unit: "racks, cages, or square feet"
+
+# ============================================================================
+# METADATA
+# ============================================================================
+
+metadata:
+  total_terms: 28
+  categories:
+    products_services: 6
+    facilities: 2
+    technical_terms: 14
+    partners: 1
+    geographic: 3
+    disambiguation_rules: 2
+  coverage:
+    - "Core products (ServiceFabric, Colocation, Scale, PlatformDIGITAL)"
+    - "Key concepts (Data Gravity)"
+    - "Major facility site codes (top 2 by query frequency)"
+    - "Essential technical infrastructure terms"
+    - "Partner ecosystem (CSP, NSP, Megaport)"
+    - "Primary geographic regions"
+    - "Internet exchange services (DRIX)"
+  extraction_source: "60-day query analysis (537 in-scope queries from clusters 2, 3, 4)"
+  prioritization_method: "Term frequency + business value assessment"
+  version_history:
+    - version: "0.1"
+      date: "2025-11-13"
+      changes: "Initial lexicon based on clustering analysis and domain expert review"
+      reviewed_by: "Domain expert"
+  expansion_notes:
+    - "Additional site codes can be added systematically as needed"
+    - "Technical terms prioritized by query frequency (180+ mentions for 'data center')"
+    - "Geographic terms focus on major regions (EMEA, APAC, North America)"
+    - "Partner categories (CSP, NSP) cover major ecosystem players"
+    - "Disambiguation rules address most common ambiguous terms"
+  usage_notes:
+    - "Query rewrite service should expand synonyms for better retrieval"
+    - "Disambiguation rules should be applied when context is ambiguous"
+    - "Site codes follow pattern: 3 letters (market) + 2-3 digits"
+    - "Power measurements: kW for rack-level, MW for building-level capacity"
+
+
