@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 // Use environment variable for API URL, fallback to localhost for development
 // In Azure, set VITE_API_BASE_URL in App Service Configuration
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-const POLL_INTERVAL = 30000; // 30 seconds - auto refresh
+const POLL_INTERVAL = 5 * 60 * 1000; // 5 minutes - matches backend sync interval
 
 export function useApiData() {
   const [data, setData] = useState({
@@ -15,6 +15,7 @@ export function useApiData() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   const fetchAllData = useCallback(async () => {
     try {
@@ -36,12 +37,34 @@ export function useApiData() {
     }
   }, []);
 
+  // Trigger a manual sync on the backend (incremental by default)
+  const triggerSync = useCallback(async (full = false) => {
+    setIsSyncing(true);
+    try {
+      const response = await fetch(`${API_BASE}/api/sync?full=${full}`, {
+        method: 'POST',
+      });
+      
+      if (!response.ok) {
+        throw new Error('Sync failed');
+      }
+      
+      // Refresh data after sync completes
+      await fetchAllData();
+    } catch (err) {
+      console.error('Failed to trigger sync:', err);
+      setError(err.message);
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [fetchAllData]);
+
   // Initial fetch on mount
   useEffect(() => {
     fetchAllData();
   }, [fetchAllData]);
 
-  // Poll every 30 seconds for live updates
+  // Poll every 5 minutes for live updates (matches backend sync interval)
   useEffect(() => {
     const interval = setInterval(fetchAllData, POLL_INTERVAL);
     return () => clearInterval(interval);
@@ -52,22 +75,24 @@ export function useApiData() {
     loading, 
     error, 
     lastUpdated, 
-    refetch: fetchAllData 
+    isSyncing,
+    refetch: fetchAllData,
+    triggerSync, // Manual sync trigger
   };
 }
 
 // Individual hooks for pages that only need specific data
 export function useRewriterData() {
-  const { data, loading, error, lastUpdated, refetch } = useApiData();
-  return { data: data.rewriter, loading, error, lastUpdated, refetch };
+  const { data, loading, error, lastUpdated, isSyncing, refetch, triggerSync } = useApiData();
+  return { data: data.rewriter, loading, error, lastUpdated, isSyncing, refetch, triggerSync };
 }
 
 export function useAdoptionData() {
-  const { data, loading, error, lastUpdated, refetch } = useApiData();
-  return { data: data.adoption, loading, error, lastUpdated, refetch };
+  const { data, loading, error, lastUpdated, isSyncing, refetch, triggerSync } = useApiData();
+  return { data: data.adoption, loading, error, lastUpdated, isSyncing, refetch, triggerSync };
 }
 
 export function useFeedbackData() {
-  const { data, loading, error, lastUpdated, refetch } = useApiData();
-  return { data: data.feedback, loading, error, lastUpdated, refetch };
+  const { data, loading, error, lastUpdated, isSyncing, refetch, triggerSync } = useApiData();
+  return { data: data.feedback, loading, error, lastUpdated, isSyncing, refetch, triggerSync };
 }

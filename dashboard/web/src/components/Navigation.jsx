@@ -6,9 +6,11 @@ import {
   Users, 
   MessageSquare, 
   Database,
-  FlaskConical
+  FlaskConical,
+  RefreshCw
 } from 'lucide-react';
 import { COLORS } from '../App';
+import { useApiData } from '../hooks/useApiData';
 
 const navItems = [
   { path: '/', label: 'Overview', icon: LayoutDashboard },
@@ -20,9 +22,20 @@ const navItems = [
 
 const Navigation = () => {
   const location = useLocation();
+  const { lastUpdated, isSyncing, triggerSync } = useApiData();
   
   // Get current page for breadcrumb
   const currentPage = navItems.find(item => item.path === location.pathname);
+  
+  // Format last updated time
+  const formatLastUpdated = (date) => {
+    if (!date) return 'Never';
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    return date.toLocaleTimeString();
+  };
   
   return (
     <nav 
@@ -49,11 +62,43 @@ const Navigation = () => {
             </div>
           </div>
           
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm">
-            <span style={{ color: COLORS.textMuted }}>Dashboard</span>
-            <span style={{ color: COLORS.textMuted }}>/</span>
-            <span style={{ color: COLORS.purple }}>{currentPage?.label || 'Overview'}</span>
+          {/* Right side: Last updated + Refresh button */}
+          <div className="flex items-center gap-4">
+            {/* Last Updated */}
+            <div className="text-xs" style={{ color: COLORS.textMuted }}>
+              Updated: {formatLastUpdated(lastUpdated)}
+            </div>
+            
+            {/* Refresh Button */}
+            <button
+              onClick={() => triggerSync(false)}
+              disabled={isSyncing}
+              className={`
+                flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium
+                transition-all duration-200 border
+                ${isSyncing 
+                  ? 'opacity-50 cursor-not-allowed' 
+                  : 'hover:bg-white/10 active:scale-95'
+                }
+              `}
+              style={{ 
+                borderColor: 'rgba(124, 58, 237, 0.3)',
+                color: COLORS.purple,
+              }}
+            >
+              <RefreshCw 
+                size={14} 
+                className={isSyncing ? 'animate-spin' : ''} 
+              />
+              {isSyncing ? 'Syncing...' : 'Refresh'}
+            </button>
+            
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2 text-sm pl-4 border-l border-white/10">
+              <span style={{ color: COLORS.textMuted }}>Dashboard</span>
+              <span style={{ color: COLORS.textMuted }}>/</span>
+              <span style={{ color: COLORS.purple }}>{currentPage?.label || 'Overview'}</span>
+            </div>
           </div>
         </div>
         
