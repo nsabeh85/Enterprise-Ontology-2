@@ -51,6 +51,17 @@ jobs:
         with:
           name: node-app
       
+      - name: Debug - List files being deployed
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Files in current directory ==="
+          ls -la
+          echo "=== Files in assets (if exists) ==="
+          ls -la assets/ 2>/dev/null || echo "No assets folder"
+          echo "=== Content of index.html ==="
+          cat index.html 2>/dev/null || echo "No index.html"
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
