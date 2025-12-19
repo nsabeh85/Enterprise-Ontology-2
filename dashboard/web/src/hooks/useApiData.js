@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const API_BASE = 'http://localhost:8000';
+// Use environment variable for API URL, fallback to localhost for development
+// In Azure, set VITE_API_BASE_URL in App Service Configuration
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 30000; // 30 seconds - auto refresh
 
 export function useApiData() {

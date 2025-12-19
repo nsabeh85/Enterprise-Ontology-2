@@ -1,0 +1,101 @@
+# =============================================================================
+# Nexus Dashboard API - Azure Deployment
+# =============================================================================
+# Deploys the FastAPI backend to Azure App Service (Python)
+#
+# SETUP REQUIRED:
+# 1. Create an Azure App Service (Python 3.11+)
+# 2. Configure federated credentials for GitHub Actions
+# 3. Add the following secrets to your GitHub repository:
+#    - AZURE_API_CLIENT_ID
+#    - AZURE_API_TENANT_ID  
+#    - AZURE_API_SUBSCRIPTION_ID
+# 4. Add environment variables in Azure App Service Configuration:
+#    - COSMOS_ENDPOINT
+#    - COSMOS_KEY
+#    - COSMOS_PROD_ENDPOINT
+#    - COSMOS_PROD_KEY
+# =============================================================================
+
+name: Build and deploy Python API to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dashboard/api/**'
+      - 'requirements.txt'
+      - '.github/workflows/api_nexus-ontology-api.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Create virtual environment and install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Prepare deployment package
+        run: |
+          # Create deployment directory with API code
+          mkdir -p deploy
+          cp -r dashboard/api/* deploy/
+          cp requirements.txt deploy/
+          
+          # Create startup script for Azure
+          echo "gunicorn --bind=0.0.0.0 --timeout 600 --workers 2 main:app -k uvicorn.workers.UvicornWorker" > deploy/startup.txt
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-api
+          path: deploy/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: python-api
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_API_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_API_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_API_SUBSCRIPTION_ID }}
+
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'nexus-ontology-api'  # Change this to your API App Service name
+          slot-name: 'Production'
+          package: .
+          startup-command: 'gunicorn --bind=0.0.0.0 --timeout 600 --workers 2 main:app -k uvicorn.workers.UvicornWorker'
+

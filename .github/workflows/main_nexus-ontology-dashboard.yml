@@ -25,6 +25,10 @@ jobs:
 
       - name: npm install, build, and test
         working-directory: ./dashboard/web
+        env:
+          # Set the API base URL for production build
+          # This should point to your deployed API endpoint
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || secrets.VITE_API_BASE_URL || '' }}
         run: |
           npm install
           npm run build --if-present

@@ -42,10 +42,31 @@ For Production:
 import os
 from typing import List, Dict, Any, Optional
 from azure.cosmos import CosmosClient, exceptions
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Try to load from .env file for local development
+# In Azure App Service, environment variables are set directly in Configuration
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+    print("[CONFIG] Loaded .env file (local development mode)")
+except ImportError:
+    print("[CONFIG] python-dotenv not installed, using system environment variables")
+
+# Log environment variable status (without exposing values)
+def _check_env_vars():
+    """Check which environment variables are set (for debugging)."""
+    vars_to_check = [
+        "COSMOS_ENDPOINT",
+        "COSMOS_KEY", 
+        "COSMOS_PROD_ENDPOINT",
+        "COSMOS_PROD_KEY"
+    ]
+    for var in vars_to_check:
+        value = os.getenv(var)
+        status = "SET" if value else "NOT SET"
+        print(f"[CONFIG] {var}: {status}")
+
+_check_env_vars()
 
 
 class CosmosClientService:
@@ -104,7 +125,8 @@ class CosmosClientService:
             if not endpoint or not key:
                 raise ValueError(
                     "Missing COSMOS_ENDPOINT or COSMOS_KEY environment variables. "
-                    "Please set them in your .env file."
+                    "For local dev: set in .env file. "
+                    "For Azure: set in App Service Configuration."
                 )
             
             try:
@@ -132,7 +154,8 @@ class CosmosClientService:
             if not endpoint or not key:
                 raise ValueError(
                     "Missing COSMOS_PROD_ENDPOINT or COSMOS_PROD_KEY environment variables. "
-                    "Please set them in your .env file."
+                    "For local dev: set in .env file. "
+                    "For Azure: set in App Service Configuration."
                 )
             
             try:

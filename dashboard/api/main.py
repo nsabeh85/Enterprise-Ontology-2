@@ -144,19 +144,32 @@ app = FastAPI(
 # Browsers block cross-origin requests by default for security.
 # This middleware tells the browser it's okay for the frontend to call our API.
 #
-# SECURITY NOTE:
-# In production, you should restrict origins to your actual domain.
-# For local development, we allow all origins with "*".
+# CONFIGURATION:
+# Set CORS_ALLOWED_ORIGINS environment variable in Azure App Service 
+# as a comma-separated list of allowed origins.
+# Example: "https://nexus-ontology-dashboard.azurewebsites.net,http://localhost:5173"
+
+# Build allowed origins list from environment variable
+cors_origins_env = os.getenv("CORS_ALLOWED_ORIGINS", "")
+cors_origins = [
+    "http://localhost:5173",  # Vite dev server
+    "http://localhost:3000",  # Alternative React port
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+]
+
+# Add origins from environment variable (for Azure production)
+if cors_origins_env:
+    cors_origins.extend([origin.strip() for origin in cors_origins_env.split(",") if origin.strip()])
+    print(f"[CORS] Added origins from env: {cors_origins_env}")
+else:
+    # If no env var set, allow all origins (dev mode)
+    cors_origins.append("*")
+    print("[CORS] No CORS_ALLOWED_ORIGINS set, allowing all origins (dev mode)")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite dev server
-        "http://localhost:3000",  # Alternative React port
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-        "*",  # Allow all for development - CHANGE IN PRODUCTION
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers

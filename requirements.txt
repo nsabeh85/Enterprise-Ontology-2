@@ -24,6 +24,7 @@ openai>=1.0.0                # Azure OpenAI for answer scoring & categorization
 # -----------------------------------------------------------------------------
 fastapi>=0.109.0             # High-performance async web framework
 uvicorn>=0.27.0              # ASGI server for FastAPI
+gunicorn>=21.0.0             # Production WSGI/ASGI server for Azure
 
 # -----------------------------------------------------------------------------
 # Data Processing
