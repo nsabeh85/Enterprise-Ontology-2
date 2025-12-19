@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -24,11 +24,6 @@ jobs:
           node-version: '22.x'
 
       - name: npm install, build, and test
-        working-directory: ./dashboard/web
-        env:
-          # Set the API base URL for production build
-          # This should point to your deployed API endpoint
-          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || secrets.VITE_API_BASE_URL || '' }}
         run: |
           npm install
           npm run build --if-present
@@ -38,27 +33,27 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: ./dashboard/web/dist
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_917EECD7E7304EA0BEF22D4CA2C25F4D }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_817A1DC25D4D4F918B144409F018D815 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2F56737CC2144D58B9BACAF5B909AAA9 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_72CB20BBA3514A75BD23C8D58CBEC23D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_04F076F6A64D42C9A6C8D2844688C38C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_19703C43C4C74C368A80962F213648CF }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -67,3 +62,4 @@ jobs:
           app-name: 'nexus-ontology-dashboard'
           slot-name: 'Production'
           package: .
+          
