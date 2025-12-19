@@ -54,7 +54,7 @@ const Navigation = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold" style={{ color: COLORS.textPrimary }}>
-                Nexus IQ
+                Nexus IQ <span className="text-xs font-normal opacity-50">v2</span>
               </h1>
               <p className="text-xs" style={{ color: COLORS.textMuted }}>
                 Query Optimizer Observability
