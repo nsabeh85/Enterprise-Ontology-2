@@ -24,9 +24,6 @@ jobs:
           node-version: '22.x'
 
       - name: npm install, build, and test
-        working-directory: ./dashboard/web
-        env:
-          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || '' }}
         run: |
           npm install
           npm run build --if-present
@@ -36,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: ./dashboard/web/dist
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,23 +48,12 @@ jobs:
         with:
           name: node-app
       
-      - name: Debug - List files being deployed
-        run: |
-          echo "=== Current directory ==="
-          pwd
-          echo "=== Files in current directory ==="
-          ls -la
-          echo "=== Files in assets (if exists) ==="
-          ls -la assets/ 2>/dev/null || echo "No assets folder"
-          echo "=== Content of index.html ==="
-          cat index.html 2>/dev/null || echo "No index.html"
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_72CB20BBA3514A75BD23C8D58CBEC23D }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_04F076F6A64D42C9A6C8D2844688C38C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_19703C43C4C74C368A80962F213648CF }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6A955DD57E244C20B8D7916AC69F2C65 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_67ABE898A63C46ECBCEE9F2B7AA0C789 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_739E123326014A5A9D340B057DFD4DEA }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
