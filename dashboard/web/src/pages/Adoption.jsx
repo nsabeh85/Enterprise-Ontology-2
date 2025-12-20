@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   BarChart,
   Bar,
@@ -14,7 +14,9 @@ import {
   Target, 
   BarChart3, 
   Clock, 
-  Calendar
+  Calendar,
+  Zap,
+  X
 } from 'lucide-react';
 import { COLORS } from '../App';
 import { Card, KPICard, Badge, PageHeader, TitleWithInfo } from '../components/ui';
@@ -22,12 +24,85 @@ import { Card, KPICard, Badge, PageHeader, TitleWithInfo } from '../components/u
 // Import data
 import { useApiData } from '../hooks/useApiData';
 
+// Toast Notification Component
+const QueryNotification = ({ notifications, onDismiss }) => {
+  return (
+    <div className="fixed right-4 top-20 z-50 space-y-2 max-h-[70vh] overflow-hidden">
+      {notifications.map((notif) => (
+        <div
+          key={notif.id}
+          className="animate-slide-in-right flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border"
+          style={{
+            background: 'rgba(26, 26, 46, 0.95)',
+            borderColor: 'rgba(34, 211, 238, 0.3)',
+            backdropFilter: 'blur(10px)',
+            minWidth: '280px',
+          }}
+        >
+          <div 
+            className="p-2 rounded-full"
+            style={{ background: 'rgba(34, 211, 238, 0.2)' }}
+          >
+            <Zap size={16} style={{ color: COLORS.cyan }} />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-medium" style={{ color: COLORS.textPrimary }}>
+              New Query
+            </p>
+            <p className="text-xs" style={{ color: COLORS.textMuted }}>
+              {notif.count} new {notif.count === 1 ? 'query' : 'queries'} just came in
+            </p>
+          </div>
+          <button 
+            onClick={() => onDismiss(notif.id)}
+            className="p-1 rounded hover:bg-white/10 transition-colors"
+          >
+            <X size={14} style={{ color: COLORS.textMuted }} />
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const Adoption = () => {
   // Fetch live data from API
   const { data, loading, error } = useApiData();
   
+  // Track previous query count for notifications
+  const [notifications, setNotifications] = useState([]);
+  const prevQueryCount = useRef(null);
+  const notifIdCounter = useRef(0);
+  
   // Use adoption data from API (must be before any conditional returns for consistency)
   const adoptionData = data?.adoption || {};
+  
+  // Detect new queries and show notification
+  useEffect(() => {
+    const currentCount = adoptionData.totalQueries || 0;
+    
+    if (prevQueryCount.current !== null && currentCount > prevQueryCount.current) {
+      const newQueries = currentCount - prevQueryCount.current;
+      const newNotif = {
+        id: notifIdCounter.current++,
+        count: newQueries,
+        timestamp: Date.now(),
+      };
+      
+      setNotifications(prev => [newNotif, ...prev].slice(0, 5)); // Keep max 5 notifications
+      
+      // Auto-dismiss after 5 seconds
+      setTimeout(() => {
+        setNotifications(prev => prev.filter(n => n.id !== newNotif.id));
+      }, 5000);
+    }
+    
+    prevQueryCount.current = currentCount;
+  }, [adoptionData.totalQueries]);
+  
+  const dismissNotification = (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
 
   // Loading state
   if (loading) {
@@ -43,6 +118,12 @@ const Adoption = () => {
 
   return (
     <div className="space-y-8">
+      {/* Live Query Notifications */}
+      <QueryNotification 
+        notifications={notifications} 
+        onDismiss={dismissNotification} 
+      />
+      
       <PageHeader 
         title="Adoption & Engagement"
         subtitle={`Production usage metrics from ${(adoptionData.totalQueries || 0).toLocaleString()} total queries`}
